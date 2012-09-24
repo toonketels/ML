@@ -105,8 +105,8 @@ var Pop = function(popStart) {
     for (var i = 0, length = pop.length; i < length; i = i+2) {
       groupA.push(pop[i]);
       groupB.push(pop[i+1]);
-      offspringA.push(pop[i].mate(pop[i+1]));
-      offspringB.push(pop[i+1].mate(pop[i]));
+      offspringA.push(pop[0].mate(pop[i]));
+      offspringB.push(pop[i].mate(pop[0]));
     }
 
     // Set the new population
