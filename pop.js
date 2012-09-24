@@ -72,8 +72,8 @@ var Pop = function(popStart) {
   // of the population
   function mutateGeneration() {
 
-    var lowerBound = 1
-      , upperBound = 5
+    var lowerBound = 0
+      , upperBound = 2
       , getRandomNumber
       , i
       , length = pop.length;
@@ -82,14 +82,14 @@ var Pop = function(popStart) {
       return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
     };
 
-    //i = getRandomNumber();
-    i = 0;
+    i = getRandomNumber();
+    //i = 0;
 
     while(i < length) {
       pop[i].mutate();
 
-     //i = i + getRandomNumber();
-     i++;
+     i = i + getRandomNumber();
+     //i++;
     }
   }
 
