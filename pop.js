@@ -73,7 +73,7 @@ var Pop = function(popStart) {
   function mutateGeneration() {
 
     var lowerBound = 0
-      , upperBound = 2
+      , upperBound = 6
       , getRandomNumber
       , i
       , length = pop.length;
