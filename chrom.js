@@ -54,7 +54,7 @@ var Chrom = function(code) {
       	  , diff;
 
       	diff = idealCharCode - codeCharCode;
-      	cost += (diff * diff);
+      	cost += (diff * diff) * 2;
       }
 
       this.cost = cost;

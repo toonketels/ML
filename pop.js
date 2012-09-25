@@ -82,8 +82,8 @@ var Pop = function(popStart) {
       return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
     };
 
-    i = getRandomNumber();
-    //i = 0;
+    //i = getRandomNumber();
+    i = 0;
 
     while(i < length) {
       pop[i].mutate();
