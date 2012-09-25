@@ -17,7 +17,10 @@ var Population = function(goal, size) {
   }
 }
 
-// @todo if cost function is ok
+
+/**
+ * Sorts the population on cost.
+ */
 Population.prototype.sort = function() {
   this.members.sort(function(a, b) {
   	return a.cost - b.cost;
@@ -25,6 +28,11 @@ Population.prototype.sort = function() {
 }
 
 
+/**
+ * Creates new generations with
+ * mating and mutation until
+ * reached to goal.
+ */
 Population.prototype.generation = function() {
   
   this.members.forEach(function(gene) {
@@ -40,6 +48,8 @@ Population.prototype.generation = function() {
   for (var i = 0, length = this.members.length; i < length; i++) {
   	this.members[i].mutate(0.3, 30);
   	this.members[i].calcCost(this.goal);
+
+  	// Termination condition...
   	if (this.members[i].code == this.goal) {
   	  this.sort();
   	  this.display();
@@ -55,25 +65,17 @@ Population.prototype.generation = function() {
 }
 
 
+/**
+ * Ouput the number one gene
+ * in the console,
+ */
 Population.prototype.display = function() {
   var gene = this.members[0];
-  	console.log(
-        this.generationNumber
-      + ' - '
-      + gene.code
-      + ' : '
-      + gene.cost
-  	);
-
- /* 
-  this.members.forEach(function(gene) {
-  	console.log(
-        this.generationNumber
-      + ' - '
-      + gene.code
-      + ' : '
-      + gene.cost
-  	);
-  }, this);
-*/
+  console.log(
+      this.generationNumber
+    + ' - '
+    + gene.code
+    + ' : '
+    + gene.cost
+  );
 }
