@@ -45,7 +45,7 @@ Gene.prototype.mate = function(gene) {
   var child1 = this.code.substr(0, pivot) + gene.code.substr(pivot)
     , child2 = gene.code.substr(0, pivot) + this.code.substr(pivot);
 
-  return [child1, child2];
+  return [new Gene(child1), new Gene(child2)];
 }
 
 
@@ -61,11 +61,12 @@ Gene.prototype.mutate = function(chance, amount) {
 
   var maxAmount = (amount) ? amount : 20;
 
-  var index = Math.round(Math.random() * this.code.length)
+  var index = Math.floor(Math.random() * this.code.length)
     , upOrDown = (Math.random() > 0.5) ? 1 : -1
     , amount = Math.round(Math.random() * maxAmount);
 
   var newCharCode = this.code.charCodeAt(index) + (upOrDown * amount);
+  //var newCharCode = this.code.charCodeAt(index) + upOrDown;
   
   if (newCharCode > 255) newCharCode = 255;
   if (newCharCode < 0) newCharCode = 0;
