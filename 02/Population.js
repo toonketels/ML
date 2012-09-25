@@ -47,18 +47,6 @@ Population.prototype.generation = function() {
   	}
   }
 
-/*
-  this.members.forEach(function(gene) {
-    gene.mutate(0.4, 30);
-    gene.calcCost(this.goal);
-    if (gene.code == this.goal) {
-      this.sort();
-      this.display();
-      return true;
-    }
-  }, this);
-*/
-
   this.generationNumber++;
   var scope = this;
   setTimeout(function() {
