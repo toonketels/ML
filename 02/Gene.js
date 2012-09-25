@@ -2,16 +2,9 @@
  * Gene object constructor.
  */
 var Gene = function(code) {
-  if (code) this.code = code;
+  this.code = (code) ? code : '';
   this.cost = 9999;
 }
-
-
-/**
- * Code property is empty
- * string when net yet set.
- */
-Gene.prototype.code = '';
 
 
 /**
@@ -66,7 +59,7 @@ Gene.prototype.mutate = function(chance, amount) {
 
   if (Math.random() > chance) return;
 
-  var maxAmount = (amount !== undefined) ? amount : 20;
+  var maxAmount = (amount) ? amount : 20;
 
   var index = Math.round(Math.random() * this.code.length)
     , upOrDown = (Math.random() > 0.5) ? 1 : -1
