@@ -6,11 +6,16 @@ var Pop = function(popStart) {
 
   this.findOptimalSolution = function() {
     this.getPop();
+    this.regenerate()
+    console.log(this.currentBest)
+    
+    // Terminator
+    if (this.currentBestCost == 0) return;
 
-    while(this.currentBestCost != 0) {
-      this.regenerate();
-      console.log(this.currentBest);
-    }
+    var scope = this;
+    setTimeout(function() {
+      scope.findOptimalSolution();
+    }, 20);
   }
 
   /**
