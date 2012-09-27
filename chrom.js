@@ -89,10 +89,10 @@ var Chrom = function(code) {
         , upLowerBound = 'a'.charCodeAt()		// 97
         , upUpperBound = 'z'.charCodeAt()		// 122
         , charCode = char.charCodeAt()
-        , move = 3
+        , move = (Math.random() > 0.5) ? -1 : 1
         , charTransformedCode
         , lowUpperBoundDiff
-        , upUpperBoundDiffmo;
+        , upUpperBoundDiff;
 
       // Increment char coding
       charTransformedCode = charCode + move;
