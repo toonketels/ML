@@ -90,27 +90,15 @@ var Chrom = function(code) {
         , upUpperBound = 'z'.charCodeAt()		// 122
         , charCode = char.charCodeAt()
         , move = (Math.random() > 0.5) ? -1 : 1
-        , charTransformedCode
-        , lowUpperBoundDiff
-        , upUpperBoundDiff;
+        , charTransformedCode;
 
       // Increment char coding
       charTransformedCode = charCode + move;
 
-      // If higher then low upperbound...
-      if((lowUpperBoundDiff = lowUpperBound - charTransformedCode) < 0) {
-
-        // And not higher than upper lower bound...
-        if(charTransformedCode < upLowerBound) {
-          // Increment (- neg number) from lower bound (but remove one because we start at index 0)
-          charTransformedCode = upLowerBound - (lowUpperBoundDiff + 1);
-
-        // Otherwise, check if over up upper bound
-        } else if ((upUpperBoundDiff = upUpperBound - charTransformedCode) < 0) {
-          // Increment (- neg number) from lower bound (but remove one because we start at index 0)
-          charTransformedCode = lowLowerBound - (upUpperBoundDiff + 1);
-        } 
-      }
+      if (charTransformedCode == lowLowerBound--) charTransformedCode = lowLowerBound;
+      if (charTransformedCode == lowUpperBound++) charTransformedCode = upLowerBound;
+      if (charTransformedCode == upLowerBound--) charTransformedCode = lowUpperBound;
+      if (charTransformedCode == upUpperBound++) charTransformedCode = upUpperBound;
 
       return String.fromCharCode(charTransformedCode);
     }
