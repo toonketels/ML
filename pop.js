@@ -3,6 +3,7 @@ var Pop = function(popStart) {
   this.currentBest = '';
   this.generationNumber = 0;
   this.currentBestCost = 9999;
+  this.allowedToMate = 10;
 
   this.findOptimalSolution = function() {
     this.getPop();
@@ -100,29 +101,17 @@ var Pop = function(popStart) {
 
   // Private function to let chromosomes mate
   function createOffspring() {
-    var oldPop = pop
-      , groupA = new Array()
-      , groupB = new Array()
-      , offspringA = new Array()
-      , offspringB = new Array();
 
-    // Divide in two groups and mate
-    for (var i = 0, length = pop.length; i < length; i = i+2) {
-      groupA.push(pop[i]);
-      groupB.push(pop[i+1]);
-      offspringA.push(pop[0].mate(pop[i]));
-      offspringB.push(pop[i].mate(pop[0]));
+    // Mate and add offspring to population...
+    for (var i = 0; i < this.allowedToMate; i = i+2) {
+      pop.push(pop[0].mate(pop[i]));
+      pop.push(pop[i].mate(pop[0]));
     }
-
-    // Set the new population
-    pop = groupA.concat(groupB, offspringA, offspringB);
-    //console.log(pop);
   }
 
   // Private function to kill part of population
   function  killPartOfPop() { 
-    var itemsLeft = Math.floor(0.5 * popStart);
-    pop = pop.slice(0, itemsLeft);
+    pop = pop.slice(0, pop-length - this.allowedToMate);
   }
 
   // Private function to sort fitness
