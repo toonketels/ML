@@ -1,17 +1,19 @@
 var Pop = function(popStart) {
-  var pop = new Array();
+  this.pop = getPop();
   this.currentBest = '';
   this.generationNumber = 0;
   this.currentBestCost = 9999;
   this.allowedToMate = 10;
 
   this.findOptimalSolution = function() {
-    this.getPop();
+
     this.regenerate()
-    console.log(this.currentBest)
+    console.log(this.currentBest);
     
     // Terminator
     if (this.currentBestCost == 0) return;
+
+    //if (this.generationNumber == 10) return;
 
     var scope = this;
     setTimeout(function() {
@@ -22,12 +24,12 @@ var Pop = function(popStart) {
   /**
    * Lazily instanciate pop.
    */
-  this.getPop = function() {
-  	if (pop.length) return pop;
-    
+  function getPop() {
+    var pop = new Array();
     for (var i = 0; i < popStart; i++) {
       pop[i] = new Chrom(generateRandomCode());
     }
+
     return pop;
   }
 
@@ -36,9 +38,10 @@ var Pop = function(popStart) {
    * for the current generation.
    */
   this.getCurrentGenerationFitness = function () {
-  	for (var i = 0, length = this.getPop().length; i < length; i++) {
-  	  pop[i].setFitness();
-  	  //console.log(pop[i].code + ' ' + pop[i].cost);
+
+  	for (var i = 0, length = this.pop.length; i < length; i++) {
+  	  this.pop[i].setFitness();
+  	  //console.log(this.pop[i].code + ' ' + this.pop[i].cost);
   	}
   }
 
@@ -56,43 +59,44 @@ var Pop = function(popStart) {
     // Update fitness scores
     this.getCurrentGenerationFitness();
 
-    // Sort population on fitness
-    sortOnFitness();
 
-    this.currentBest = pop[0].code + ' ' + pop[0].cost + ' - ' + this.generationNumber;
-    this.currentBestCost = pop[0].cost;
+
+    // Sort population on fitness
+    this.sortOnFitness();
+
+    this.currentBest = this.pop[0].code + ' ' + this.pop[0].cost + ' - ' + this.generationNumber;
+    this.currentBestCost = this.pop[0].cost;
 
     // Kill Lowerend population
-    killPartOfPop();
+    this.killPartOfPop();
 
     // Orgy time
-    createOffspring();
+    this.createOffspring();
 
     // Mutate
-    mutateGeneration();
+    this.mutateGeneration();
 
     this.generationNumber ++;
   }
 
   // Private function to mutate a selection
   // of the population
-  function mutateGeneration() {
+  this.mutateGeneration = function() {
 
-    var lowerBound = 0
-      , upperBound = 6
+    var upperBound = 2
       , getRandomNumber
       , i
-      , length = pop.length;
+      , length = this.pop.length;
 
     getRandomNumber = function() {
-      return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
+      return Math.round(Math.random() * upperBound);
     };
 
-    //i = getRandomNumber();
-    i = 0;
+    i = getRandomNumber();
+    //i = 0;
 
     while(i < length) {
-      pop[i].mutate();
+      this.pop[i].mutate();
 
      i = i + getRandomNumber();
      //i++;
@@ -100,44 +104,31 @@ var Pop = function(popStart) {
   }
 
   // Private function to let chromosomes mate
-  function createOffspring() {
+  this.createOffspring = function() {
 
     // Mate and add offspring to population...
     for (var i = 0; i < this.allowedToMate; i = i+2) {
-      pop.push(pop[0].mate(pop[i]));
-      pop.push(pop[i].mate(pop[0]));
+      this.pop.push(this.pop[0].mate(this.pop[i]));
+      this.pop.push(this.pop[i].mate(this.pop[0]));
     }
   }
 
   // Private function to kill part of population
-  function  killPartOfPop() { 
-    pop = pop.slice(0, pop-length - this.allowedToMate);
+  this.killPartOfPop = function() { 
+
+    this.pop = this.pop.slice(0, this.pop.length - this.allowedToMate);
   }
 
   // Private function to sort fitness
-  function sortOnFitness() {
-    var oldPop = pop;
+  this.sortOnFitness = function() {
 
-    pop.sort(function compare(a, b) {
+    this.pop.sort(function compare(a, b) {
       if (a.cost > b.cost) return 1;
       if (a.cost < b.cost) return -1;
       return 0;
     });
 
-    /*
-    for (var i = 0, length = pop.length; i < length; i++) {
-      console.log('From '
-        + oldPop[i].code
-        + ':'
-        + oldPop[i].cost
-        + ' to '
-        + pop[i].code
-        + ':'
-        + pop[i].cost);
-    }
-    */
-
-    currentBest = pop[0];
+    this.currentBest = this.pop[0];
   }
 
   // Privare function to generate random

@@ -95,10 +95,10 @@ var Chrom = function(code) {
       // Increment char coding
       charTransformedCode = charCode + move;
 
-      if (charTransformedCode == lowLowerBound--) charTransformedCode = lowLowerBound;
-      if (charTransformedCode == lowUpperBound++) charTransformedCode = upLowerBound;
-      if (charTransformedCode == upLowerBound--) charTransformedCode = lowUpperBound;
-      if (charTransformedCode == upUpperBound++) charTransformedCode = upUpperBound;
+      if (charTransformedCode == (lowLowerBound - 1)) charTransformedCode = lowLowerBound;
+      if (charTransformedCode == (lowUpperBound + 1)) charTransformedCode = upLowerBound;
+      if (charTransformedCode == (upLowerBound - 1)) charTransformedCode = lowUpperBound;
+      if (charTransformedCode == (upUpperBound + 1)) charTransformedCode = upUpperBound;
 
       return String.fromCharCode(charTransformedCode);
     }
